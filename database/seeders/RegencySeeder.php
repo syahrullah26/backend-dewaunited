@@ -3,26 +3,40 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Regency;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class RegencySeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('regencies')->truncate();
+        if (!Schema::hasTable('regencies')) {
+            return;
+        }
 
-        $file = storage_path('app/regions/regencies.csv');
+        if (DB::table('regencies')->exists()) {
+            return;
+        }
+
+        $file = base_path('database/seeders/data/regions/regencies.csv');
+
+        if (!file_exists($file)) {
+            throw new \Exception("CSV file not found: {$file}");
+        }
+
         $rows = array_map('str_getcsv', file($file));
 
-        unset($rows[0]); // skip header
+        unset($rows[0]);
 
+        $data = [];
         foreach ($rows as $row) {
-            Regency::create([
-                'id' => $row[0],
+            $data[] = [
+                'id'          => $row[0],
                 'province_id' => $row[1],
-                'name' => $row[2],
-            ]);
+                'name'        => $row[2],
+            ];
         }
+
+        DB::table('regencies')->insert($data);
     }
 }

@@ -3,26 +3,40 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\District;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class DistrictSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('districts')->truncate();
+        if (!Schema::hasTable('districts')) {
+            return;
+        }
 
-        $file = storage_path('app/regions/districts.csv');
+        if (DB::table('districts')->exists()) {
+            return;
+        }
+        $file = base_path('database/seeders/data/regions/districts.csv');
+
+        if (!file_exists($file)) {
+            throw new \Exception("CSV file not found: {$file}");
+        }
+
         $rows = array_map('str_getcsv', file($file));
 
-        unset($rows[0]); // skip header
 
+        unset($rows[0]);
+
+        $data = [];
         foreach ($rows as $row) {
-            District::create([
-                'id' => $row[0],
+            $data[] = [
+                'id'         => $row[0],
                 'regency_id' => $row[1],
-                'name' => $row[2],
-            ]);
+                'name'       => $row[2],
+            ];
         }
+
+        DB::table('districts')->insert($data);
     }
 }
