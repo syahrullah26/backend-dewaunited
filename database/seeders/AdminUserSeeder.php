@@ -16,12 +16,12 @@ class AdminUserSeeder extends Seeder
     {
         User::updateOrCreate(
             [
-                'email' => 'admin@dewa.com',
+                'email' => 'admin@dewaunited.com',
             ],
             [
                 'name' => 'Super Admin',
                 'phone' => '081234567890',
-                'password' => Hash::make('dewa123'),
+                'password' => Hash::make('password123'),
                 'role' => User::ADMIN,
                 'avatar' => null,
             ]

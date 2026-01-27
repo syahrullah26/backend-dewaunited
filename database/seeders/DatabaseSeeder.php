@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             VillageSeeder::class,
             UserSeeder::class,
             ProductSeeder::class,
-            AdminSeeder::class,
+            AdminUserSeeder::class,
         ]);
     }
 }
