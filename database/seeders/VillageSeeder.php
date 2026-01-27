@@ -4,44 +4,35 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
 
 class VillageSeeder extends Seeder
 {
     public function run(): void
     {
-        // 🔒 Pastikan tabel ada
-        if (!Schema::hasTable('villages')) {
-            return;
-        }
+        DB::table('villages')->truncate();
 
-        // 🔒 Jangan seed ulang (aman redeploy)
-        if (DB::table('villages')->exists()) {
-            return;
-        }
-
-        // ✅ Path CSV dari repo (Railway-safe)
-        $file = base_path('database/seeders/data/regions/villages.csv');
-
-        if (!file_exists($file)) {
-            throw new \Exception("CSV file not found: {$file}");
-        }
-
+        $file = database_path('seeders/data/regions/villages.csv');
         $rows = array_map('str_getcsv', file($file));
 
-        // Skip header
         unset($rows[0]);
 
-        // ⚡ Batch insert (WAJIB untuk data desa)
         $data = [];
+        $chunkSize = 500; 
+
         foreach ($rows as $row) {
             $data[] = [
-                'id'          => $row[0],
+                'id' => $row[0],
                 'district_id' => $row[1],
-                'name'        => $row[2],
+                'name' => $row[2],
             ];
-        }
 
-        DB::table('villages')->insert($data);
+            if (count($data) === $chunkSize) {
+                DB::table('villages')->insert($data);
+                $data = [];
+            }
+        }
+        if (!empty($data)) {
+            DB::table('villages')->insert($data);
+        }
     }
 }
