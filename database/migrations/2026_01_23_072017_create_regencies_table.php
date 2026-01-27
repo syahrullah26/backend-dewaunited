@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('regencies', function (Blueprint $table) {
-            $table->id()->primary();
+            $table->id();
             $table->string('province_id');
             $table->string('name');
             $table->timestamps();
