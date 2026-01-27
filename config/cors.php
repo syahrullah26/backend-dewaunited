@@ -15,6 +15,7 @@ return [
     'allowed_origins' => [
         'https://dewaunitedstore.sgp.dom.my.id',
         'https://admin-dewaunited.vercel.app',
+        'https://dewaunitedstore.vercel.app',
     ],
 
     'allowed_origins_patterns' => [],
