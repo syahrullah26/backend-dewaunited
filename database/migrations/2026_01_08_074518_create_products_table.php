@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('video_url')->nullable();
             $table->json('images');
             $table->json('colors');
-            $table->json('sizes'); 
             $table->json('badges'); 
             $table->text('description');
             $table->json('tech_specs'); 
