@@ -9,7 +9,7 @@ class VillageSeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('villages')->truncate();
+        //DB::table('villages')->truncate();
 
         $file = database_path('seeders/data/regions/villages.csv');
         $rows = array_map('str_getcsv', file($file));
