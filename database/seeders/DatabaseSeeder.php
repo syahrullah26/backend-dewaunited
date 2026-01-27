@@ -17,13 +17,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        if (!Schema::hasTable('provinces')) {
-            return;
-        }
+        // if (!Schema::hasTable('provinces')) {
+        //     return;
+        // }
 
-        if (DB::table('provinces')->exists()) {
-            return;
-        }
+        // if (DB::table('provinces')->exists()) {
+        //     return;
+        // }
 
         $this->call([
             ProvinceSeeder::class,
