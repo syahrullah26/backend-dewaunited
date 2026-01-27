@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,16 +17,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        if (DB::table('provinces')->count() === 0) {
-            $this->call([
-                ProvinceSeeder::class,
-                RegencySeeder::class,
-                DistrictSeeder::class,
-                VillageSeeder::class,
-                UserSeeder::class,
-                ProductSeeder::class,
-                AdminSeeder::class,
-            ]);
+        if (!Schema::hasTable('provinces')) {
+            return;
         }
+
+        if (DB::table('provinces')->exists()) {
+            return;
+        }
+
+        $this->call([
+            ProvinceSeeder::class,
+            RegencySeeder::class,
+            DistrictSeeder::class,
+            VillageSeeder::class,
+            UserSeeder::class,
+            ProductSeeder::class,
+            AdminSeeder::class,
+        ]);
     }
 }
