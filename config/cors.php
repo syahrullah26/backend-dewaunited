@@ -8,6 +8,7 @@ return [
 
     'allowed_origins' => [
         'https://dewaunitedstore.sgp.dom.my.id',
+        'https://admin-dewaunited.sgp.dom.my.id',
     ],
 
     'allowed_origins_patterns' => [],
