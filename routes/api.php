@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\Api\{
     ActivationController,
+    ArticleController,
     LookbookController,
     CategoryController,
     MatchGameController,
@@ -204,6 +205,10 @@ Route::prefix('v2')->group(function () {
     Route::put('/activations/{slug}', [ActivationController::class, 'update']);
     Route::delete('/activations/{slug}', [ActivationController::class, 'destroy']);
 
+    //artikel
+    Route::get('articles/published', [ArticleController::class, 'published']);
+    Route::get('articles/published/{slug}', [ArticleController::class, 'showPublished']);
+
     // =====================
     // USER
     // =====================
@@ -295,5 +300,8 @@ Route::prefix('v2')->group(function () {
             Route::post('lookbooks', [LookbookController::class, 'store']);
             Route::put('lookbooks/{id}', [LookbookController::class, 'update']);
             Route::delete('lookbooks/{id}', [LookbookController::class, 'destroy']);
+
+            //artikel
+            Route::apiResource('articles', ArticleController::class);
         });
 });
