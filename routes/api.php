@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\Api\{
+    ActivationController,
     LookbookController,
     CategoryController,
     MatchGameController,
@@ -195,6 +196,13 @@ Route::prefix('v2')->group(function () {
     Route::get('/villages', [RegionController::class, 'villages']);
     // SHIPPING
     Route::post('/shipping/rates', [ShippingController::class, 'rates']);
+
+    // ACTIVATIONS
+    Route::get('/activations', [ActivationController::class, 'index']);
+    Route::get('/activations/{slug}', [ActivationController::class, 'show']);
+    Route::post('/activations', [ActivationController::class, 'store']);
+    Route::put('/activations/{slug}', [ActivationController::class, 'update']);
+    Route::delete('/activations/{slug}', [ActivationController::class, 'destroy']);
 
     // =====================
     // USER
