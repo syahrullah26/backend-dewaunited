@@ -8,6 +8,7 @@ use Illuminate\Support\Str;
 class Article extends Model
 {
 
+
     protected $fillable = [
         'title',
         'slug',
@@ -33,20 +34,40 @@ class Article extends Model
         'view_count' => 0,
     ];
 
-    public function setTitleAttribute($value)
+    protected static function boot()
     {
-        $this->attributes['title'] = $value;
-        
-        if (empty($this->attributes['slug'])) {
-            $this->attributes['slug'] = Str::slug($value);
+        parent::boot();
+
+        static::saving(function ($article) {
+            if (empty($article->slug) && !empty($article->title)) {
+                $article->slug = static::generateUniqueSlug($article->title, $article->id);
+            }
+        });
+    }
+
+    protected static function generateUniqueSlug($title, $excludeId = null)
+    {
+        $slug = Str::slug($title);
+        $originalSlug = $slug;
+        $count = 1;
+
+        while (static::where('slug', $slug)
+            ->when($excludeId, function ($query, $excludeId) {
+                return $query->where('id', '!=', $excludeId);
+            })
+            ->exists()) {
+            $slug = $originalSlug . '-' . $count;
+            $count++;
         }
+
+        return $slug;
     }
 
     public function scopePublished($query)
     {
         return $query->where('status', 'published')
-                    ->whereNotNull('published_at')
-                    ->where('published_at', '<=', now());
+            ->whereNotNull('published_at')
+            ->where('published_at', '<=', now());
     }
 
     public function scopeDraft($query)
@@ -66,8 +87,8 @@ class Article extends Model
 
     public function isPublished(): bool
     {
-        return $this->status === 'published' 
-               && $this->published_at !== null 
-               && $this->published_at->lte(now());
+        return $this->status === 'published'
+            && $this->published_at !== null
+            && $this->published_at->lte(now());
     }
 }
