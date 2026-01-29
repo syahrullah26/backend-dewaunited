@@ -43,18 +43,30 @@ class ArticleController extends Controller
 
     public function store(StoreArticleRequest $request): JsonResponse
     {
-        $data = $request->validated();
- 
-        if ($data['status'] === 'published' && empty($data['published_at'])) {
-            $data['published_at'] = now();
+        try {
+            $data = $request->validated();
+            if ($data['status'] === 'published' && empty($data['published_at'])) {
+                $data['published_at'] = now();
+            }
+
+            $article = Article::create($data);
+
+            return response()->json([
+                'message' => 'Article created successfully',
+                'data' => $article
+            ], 201);
+        } catch (\Exception $e) {
+            \Log::error('Article creation failed: ' . $e->getMessage(), [
+                'trace' => $e->getTraceAsString(),
+                'request' => $request->all()
+            ]);
+
+            return response()->json([
+                'message' => 'Failed to create article',
+                'error' => $e->getMessage(),
+                'trace' => config('app.debug') ? $e->getTraceAsString() : null
+            ], 500);
         }
-
-        $article = Article::create($data);
-
-        return response()->json([
-            'message' => 'Article created successfully',
-            'data' => $article
-        ], 201);
     }
 
 
