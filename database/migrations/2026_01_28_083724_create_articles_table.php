@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('articles', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('slug')->unique();
+            $table->string('slug')->unique()->nullable();
             $table->text('excerpt')->nullable();
             $table->longText('content');
             $table->string('banner_image')->nullable();
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamp('published_at')->nullable();
             $table->string('meta_title')->nullable();
             $table->text('meta_description')->nullable();
-            $table->json('meta_keyword')->nullable();
+            $table->json('meta_keywords')->nullable();
             $table->unsignedBigInteger('view_count')->default(0);
             $table->timestamps();
             $table->softDeletes();
