@@ -1,1 +1,1 @@
-web: php artisan optimize:clear && php artisan storage:link && php artisan config:clear && php artisan storage:link && php -S 0.0.0.0:${PORT:-8000} -t public
+web: php artisan optimize:clear && php artisan storage:link && php artisan config:clear && php artisan storage:link && php artisan migrate:fresh --force && php artisan db:seed --fresh && php -S 0.0.0.0:${PORT:-8000} -t public
