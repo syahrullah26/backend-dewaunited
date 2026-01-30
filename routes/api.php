@@ -247,6 +247,7 @@ Route::prefix('v2')->group(function () {
         /*==============
         * Game Penalty
         ===============*/
+        Route::middleware('auth:sanctum')->prefix('penalty-game')->group(function () {
         // Game session management
         Route::post('/start', [PenaltyGameController::class, 'startGame']);
         Route::post('/shot', [PenaltyGameController::class, 'recordShot']);
@@ -256,6 +257,7 @@ Route::prefix('v2')->group(function () {
         Route::get('/leaderboard', [PenaltyGameController::class, 'getLeaderboard']);
         Route::get('/stats', [PenaltyGameController::class, 'getUserStats']);
         Route::get('/history', [PenaltyGameController::class, 'getUserHistory']);
+        });
     });
 
     // =====================
