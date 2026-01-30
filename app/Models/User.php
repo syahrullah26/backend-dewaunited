@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\PenaltyGameSession;
+use App\Models\PenaltyGameStats;
 
 class User extends Authenticatable
 {
@@ -26,7 +28,8 @@ class User extends Authenticatable
         'phone',
         'password',
         'role',
-        'avatar'
+        'avatar',
+        'penalty_points'
     ];
 
     /**
@@ -50,5 +53,15 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function penaltyGameSessions()
+    {
+        return $this->hasMany(PenaltyGameSession::class);
+    }
+
+    public function penaltyGameStats()
+    {
+        return $this->hasOne(PenaltyGameStats::class);
     }
 }

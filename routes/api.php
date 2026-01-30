@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use App\Http\Controllers\Api\{
+    PenaltyGameController,
     ActivationController,
     ArticleController,
     LookbookController,
@@ -242,6 +243,19 @@ Route::prefix('v2')->group(function () {
         Route::put('cart/items/{itemId}', [CartController::class, 'updateQuantity']);
         Route::delete('cart/items/{itemId}', [CartController::class, 'removeItem']);
         Route::delete('cart/clear', [CartController::class, 'clear']);
+
+        /*==============
+        * Game Penalty
+        ===============*/
+        // Game session management
+        Route::post('/start', [PenaltyGameController::class, 'startGame']);
+        Route::post('/shot', [PenaltyGameController::class, 'recordShot']);
+        Route::post('/end', [PenaltyGameController::class, 'endGame']);
+        
+        // Stats and leaderboard
+        Route::get('/leaderboard', [PenaltyGameController::class, 'getLeaderboard']);
+        Route::get('/stats', [PenaltyGameController::class, 'getUserStats']);
+        Route::get('/history', [PenaltyGameController::class, 'getUserHistory']);
     });
 
     // =====================
