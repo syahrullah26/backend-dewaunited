@@ -19,7 +19,7 @@ class ActivationController extends Controller
 
         $data = $query
             ->latest()
-            ->paginate(9);
+            ->paginate(10);
 
         return response()->json([
             'status' => 'success',
