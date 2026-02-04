@@ -79,7 +79,7 @@ class Product extends Model
         return $this->external_links['tokopedia'] ?? null;
     }
 
-    public function getTktokShopLinkAttribute()
+    public function getTiktokShopLinkAttribute()
     {
         return $this->external_links['tiktok_shop'] ?? null;
     }

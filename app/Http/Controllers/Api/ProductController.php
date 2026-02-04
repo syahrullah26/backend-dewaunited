@@ -63,6 +63,12 @@ class ProductController extends Controller
                     'price' => $p->price,
                     'image' => $p->images[0] ?? null,
                 ]),
+
+                'external_links' => $product->external_links,
+                'shopee_link' => $product->shopee_link,
+                'tokopedia_link' => $product->tokopedia_link,
+                'tiktok_shop_link' => $product->tiktok_shop_link,
+                
                 'is_active' => $product->is_active,
                 'created_at' => $product->created_at,
                 'updated_at' => $product->updated_at,
@@ -127,7 +133,7 @@ class ProductController extends Controller
             'external_links' => 'nullable|array',
             'external_links.shopee' => 'nullable|url',
             'external_links.tokopedia' => 'nullable|url',
-            'external_links.tiktok_shop' => 'nullable|array',
+            'external_links.tiktok_shop' => 'nullable|url',
 
             'is_active' => 'boolean',
         ]);
