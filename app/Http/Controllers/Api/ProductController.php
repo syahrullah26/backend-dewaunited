@@ -64,7 +64,7 @@ class ProductController extends Controller
                     'image' => $p->images[0] ?? null,
                 ]),
 
-                'external_links' => $product->external_links,
+                'external_links' => $product->external_links ?? [],
                 'shopee_link' => $product->shopee_link,
                 'tokopedia_link' => $product->tokopedia_link,
                 'tiktok_shop_link' => $product->tiktok_shop_link,
