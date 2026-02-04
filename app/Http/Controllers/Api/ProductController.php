@@ -124,6 +124,11 @@ class ProductController extends Controller
             'related_products' => 'nullable|array',
             'related_products.*' => 'integer|exists:products,id',
 
+            'external_links' => 'nullable|array',
+            'external_links.shopee' => 'nullable|url',
+            'external_links.tokopedia' => 'nullable|url',
+            'external_links.tiktok_shop' => 'nullable|array',
+
             'is_active' => 'boolean',
         ]);
 
@@ -210,6 +215,11 @@ class ProductController extends Controller
 
             'related_products' => 'nullable|array',
             'related_products.*' => 'integer|exists:products,id',
+
+            'external_links' => 'nullable|array',
+            'external_links.shopee' => 'nullable|url',
+            'external_links.tokopedia' => 'nullable|url',
+            'external_links.tiktok_shop' => 'nullable|url', 
 
             'is_active' => 'boolean',
         ]);

@@ -30,6 +30,7 @@ class Product extends Model
         'detail_images',
         'lifestyle_images',
         'related_products',
+        'external_links',
         'is_active',
     ];
 
@@ -47,6 +48,7 @@ class Product extends Model
         'detail_images' => 'array',
         'lifestyle_images' => 'array',
         'related_products' => 'array',
+        'external_links' => 'array',
         'is_active' => 'boolean',
     ];
     
@@ -65,6 +67,24 @@ class Product extends Model
             ->where('is_active', true)
             ->get();
     }
+
+    //helper acessor link toko eksternal
+    public function getShopeeLinkAttribute()
+    {
+        return $this->external_links['shopee'] ?? null;
+    }
+
+    public function getTokopediaLinkAttribute()
+    {
+        return $this->external_links['tokopedia'] ?? null;
+    }
+
+    public function getTktokShopLinkAttribute()
+    {
+        return $this->external_links['tiktok_shop'] ?? null;
+    }
+
+    // relasi
     public function media()
     {
         return $this->hasMany(UploadStorage::class, 'product_id');
